@@ -10,15 +10,17 @@ const productsSchema = new mongoose.Schema<IProduct>({
     active: {type: Boolean, default: false},
     discount: {
       amount: {type: Number, default: 0},
-      start_at: {type: Date, default: Date.now()},
-      end_at: {type: Date, default: Date.now()},
+      start_at: {type: Number, default: Date.now()},
+      end_at: {type: Number, default: Date.now()},
     },
     free_delivery: {
       active: {type: Boolean, default: false},
-      start_at: {type: Date, default: Date.now()},
-      end_at: {type: Date, default: Date.now()},
+      start_at: {type: Number, default: Date.now()},
+      end_at: {type: Number, default: Date.now()},
     },
   },
+  created_at: {type: Number, required: true, default: Date.now()},
+  updated_at: {type: Number, require: true, default: Date.now()},
   rating: {type: Number, required: true, default: 0},
 });
 

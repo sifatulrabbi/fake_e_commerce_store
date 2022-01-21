@@ -13,4 +13,5 @@ if (fs.existsSync(".env")) {
 export const config = {
   PROD: process.env.NODE_ENV === "production",
   PORT: parseInt(process.env.PORT || "5000"),
+  MONGODB_URI: process.env.MONGODB_URI || "none",
 };

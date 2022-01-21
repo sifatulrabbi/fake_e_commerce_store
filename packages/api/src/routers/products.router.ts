@@ -1,16 +1,18 @@
 import * as express from "express";
+import {productsController} from "../controllers/products.controller";
+import {createProductValidator} from "../validators/create-product.validator";
 
 export const productsRouter = express.Router();
 
-productsRouter.get("/");
+productsRouter.get("/", productsController.getAll);
 
-productsRouter.get("/:id");
+productsRouter.get("/:id", productsController.getOneWithId);
 
 productsRouter.get("/categories/:cat_name");
 
-productsRouter.post("/");
+productsRouter.post("/", createProductValidator, productsController.create);
 
-productsRouter.put("/:id");
+productsRouter.put("/:id", productsController.update);
 
 productsRouter.delete("/");
 

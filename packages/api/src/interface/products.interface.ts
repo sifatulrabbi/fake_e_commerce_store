@@ -10,15 +10,17 @@ export interface IProduct {
     active: boolean;
     discount: {
       amount: number;
-      start_at: Date;
-      end_at: Date;
+      start_at: number;
+      end_at: number;
     };
     free_delivery: {
       active: boolean;
-      start_at: Date;
-      end_at: Date;
+      start_at: number;
+      end_at: number;
     };
   };
+  created_at: number;
+  updated_at: number;
   rating: number;
 }
 

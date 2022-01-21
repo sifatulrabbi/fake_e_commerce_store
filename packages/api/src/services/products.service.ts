@@ -2,11 +2,19 @@ import {productsModel} from "../models/products.model";
 import {IProduct, IProductDoc} from "../interface";
 
 class ProductsService {
-  productsModel = productsModel;
+  async getAll() {
+    try {
+      const products = await productsModel.find({});
+
+      return products;
+    } catch (err) {
+      throw new Error(String(err));
+    }
+  }
 
   async getOne(id: string): Promise<IProductDoc | null> {
     try {
-      const product = await this.productsModel.findById(id);
+      const product = await productsModel.findById(id);
 
       return product;
     } catch (err) {
@@ -23,23 +31,23 @@ class ProductsService {
       active: boolean;
       discount?: {
         amount: number;
-        start_at: Date;
-        end_at: Date;
+        start_at: number;
+        end_at: number;
       };
       free_delivery?: {
         active: boolean;
-        start_at: Date;
-        end_at: Date;
+        start_at: number;
+        end_at: number;
       };
     },
   ): Promise<IProductDoc> {
     const discount = offers.discount
       ? offers.discount
-      : {amount: 0, start_at: new Date(), end_at: new Date()};
+      : {amount: 0, start_at: Date.now(), end_at: Date.now()};
 
     const free_delivery = offers.free_delivery
       ? offers.free_delivery
-      : {active: false, start_at: new Date(), end_at: new Date()};
+      : {active: false, start_at: Date.now(), end_at: Date.now()};
 
     const productData: IProduct = {
       name,
@@ -51,14 +59,56 @@ class ProductsService {
         discount,
         free_delivery,
       },
+      created_at: Date.now(),
+      updated_at: Date.now(),
       rating: 0,
     };
 
     try {
-      const productDoc = new this.productsModel(productData);
+      const productDoc = new productsModel(productData);
       const product = await productDoc.save();
 
       return product;
+    } catch (err: unknown) {
+      throw new Error(String(err));
+    }
+  }
+
+  async update(
+    id: string,
+    name?: string,
+    description?: string,
+    price?: number,
+    tags?: string[],
+    offers?: {
+      active: boolean;
+      discount?: {
+        amount: number;
+        start_at: number;
+        end_at: number;
+      };
+      free_delivery?: {
+        active: boolean;
+        start_at: number;
+        end_at: number;
+      };
+    },
+  ): Promise<IProductDoc | null> {
+    try {
+      const updatedProduct = productsModel.findByIdAndUpdate(
+        id,
+        {
+          name,
+          description,
+          price,
+          tags,
+          offers,
+          updated_at: Date.now(),
+        },
+        {new: true},
+      );
+
+      return updatedProduct;
     } catch (err: unknown) {
       throw new Error(String(err));
     }
