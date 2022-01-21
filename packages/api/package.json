@@ -1,0 +1,37 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:sifatulrabbi/fake_e_commerce_store.git",
+  "author": "Sifatul <mdsifatulislam.rabbi@gmail.com> (https://temujins.github.io)",
+  "license": "MIT",
+  "private": true,
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "react",
+    "e-commerce",
+    "fullstack",
+    "mongodb"
+  ],
+  "scripts": {
+    "start": "NODE_ENV=production node ./dist/main.js",
+    "start:dev": "nodemon ./src/main.ts",
+    "build": "rm -rf ./dist && tsc"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.10",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  }
+}

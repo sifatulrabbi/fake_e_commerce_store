@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "declaration": true,
+    "declarationMap": true,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": false,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "noErrorTruncation": true,
+    "module": "CommonJS",
+    "moduleResolution": "node"
+  }
+}

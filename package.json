@@ -1,0 +1,25 @@
+{
+  "name": "fake_e_commerce_store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:sifatulrabbi/fake_e_commerce_store.git",
+  "author": "Sifatul <mdsifatulislam.rabbi@gmail.com> (https://temujins.github.io)",
+  "license": "MIT",
+  "private": true,
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "react",
+    "e-commerce",
+    "fullstack",
+    "mongodb"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start:api": "yarn workspace api start:dev",
+    "start:web": "yarn workspace web start:dev",
+    "build": "yarn workspace api build && yarn workspace web build"
+  }
+}
