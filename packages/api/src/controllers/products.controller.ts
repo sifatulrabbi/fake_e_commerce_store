@@ -9,7 +9,7 @@ class ProductsController {
 
       CustomResponse.ok(res, "Success", products);
     } catch (err) {
-      CustomResponse.badRequest(res, false, err);
+      CustomResponse.badRequest(res, false, err.message);
     }
   }
 
@@ -24,7 +24,7 @@ class ProductsController {
 
       CustomResponse.ok(res, "Success", [product]);
     } catch (err) {
-      CustomResponse.badRequest(res, false, err);
+      CustomResponse.badRequest(res, false, err.message);
     }
   }
 
@@ -40,8 +40,8 @@ class ProductsController {
       );
 
       CustomResponse.created(res, "Product created", [product]);
-    } catch (err: unknown) {
-      CustomResponse.badRequest(res, false, err);
+    } catch (err) {
+      CustomResponse.badRequest(res, false, err.message);
     }
   }
 
@@ -65,7 +65,31 @@ class ProductsController {
 
       CustomResponse.ok(res, "Success", [product]);
     } catch (err) {
-      CustomResponse.badRequest(res, false, err);
+      CustomResponse.badRequest(res, false, err.message);
+    }
+  }
+
+  async removeOne(req: Request, res: Response) {
+    try {
+      const product = await productsService.removeOne(req.params.id);
+
+      CustomResponse.ok(res, "Product removed", [{product_name: product.name}]);
+    } catch (err) {
+      CustomResponse.badRequest(res, false, err.message);
+    }
+  }
+
+  async getProductByCategory(req: Request, res: Response) {
+    const cat = req.params.cat_name;
+
+    try {
+      if (cat === "most-viewed") {
+        const products = await productsService.mostViewedProducts();
+        CustomResponse.ok(res, false, products);
+        return;
+      }
+    } catch (err) {
+      CustomResponse.badRequest(res, false, err.message);
     }
   }
 }

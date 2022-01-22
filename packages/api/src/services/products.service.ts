@@ -1,5 +1,7 @@
 import {productsModel} from "../models/products.model";
-import {IProduct, IProductDoc} from "../interface";
+import {IProduct, IProductDoc, IViewCount} from "../interface";
+import {viewCountService} from "./view-count.service";
+import {config} from "../configs/config";
 
 class ProductsService {
   async getAll() {
@@ -8,16 +10,22 @@ class ProductsService {
 
       return products;
     } catch (err) {
+      if (!config.PROD) console.log(err);
       throw new Error(String(err));
     }
   }
 
-  async getOne(id: string): Promise<IProductDoc | null> {
+  async getOne(id: string, admin?: boolean): Promise<IProductDoc | null> {
     try {
       const product = await productsModel.findById(id);
 
+      if (!admin) {
+        await viewCountService.addView(id);
+      }
+
       return product;
     } catch (err) {
+      if (!config.PROD) console.log(err);
       throw new Error(String(err));
     }
   }
@@ -68,8 +76,11 @@ class ProductsService {
       const productDoc = new productsModel(productData);
       const product = await productDoc.save();
 
+      if (product._id) await viewCountService.createView(product._id);
+
       return product;
     } catch (err: unknown) {
+      if (!config.PROD) console.log(err);
       throw new Error(String(err));
     }
   }
@@ -110,7 +121,55 @@ class ProductsService {
 
       return updatedProduct;
     } catch (err: unknown) {
+      if (!config.PROD) console.log(err);
       throw new Error(String(err));
+    }
+  }
+
+  async removeOne(id: string) {
+    try {
+      const product = await this.getOne(id);
+
+      if (!product) {
+        throw new Error("Product not found");
+      }
+
+      await viewCountService.removeViews(product._id);
+      await product.remove();
+
+      return product;
+    } catch (err) {
+      if (!config.PROD) console.error(err);
+      throw new Error(String(err));
+    }
+  }
+
+  async mostViewedProducts() {
+    try {
+      const products: IProduct[] = [];
+      const viewsCount: IViewCount[] =
+        await viewCountService.getMostViewedList();
+
+      for (let i = 0; i < viewsCount.length; i++) {
+        const id = viewsCount[i].product_id;
+        const product = await this.getOne(id);
+
+        if (product) {
+          products.push(product);
+        }
+      }
+
+      return products;
+    } catch (err) {
+      if (!config.PROD) console.error(err);
+      throw new Error(String(err));
+    }
+  }
+
+  async getProductsByCategory() {
+    try {
+    } catch (err) {
+      throw new Error(err);
     }
   }
 }

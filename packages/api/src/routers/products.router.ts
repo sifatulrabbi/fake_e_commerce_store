@@ -8,7 +8,10 @@ productsRouter.get("/", productsController.getAll);
 
 productsRouter.get("/:id", productsController.getOneWithId);
 
-productsRouter.get("/categories/:cat_name");
+productsRouter.get(
+  "/categories/:cat_name",
+  productsController.getProductByCategory,
+);
 
 productsRouter.post("/", createProductValidator, productsController.create);
 
@@ -16,4 +19,4 @@ productsRouter.put("/:id", productsController.update);
 
 productsRouter.delete("/");
 
-productsRouter.delete("/:id");
+productsRouter.delete("/:id", productsController.removeOne);

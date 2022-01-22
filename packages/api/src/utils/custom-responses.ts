@@ -11,6 +11,7 @@ export class CustomResponse {
     this.res.status(this.statusCode).json({
       statusCode: this.statusCode,
       message: this.message,
+      data_count: this.data ? this.data.length : 0,
       data: this.data,
       errors: this.errors,
     });
