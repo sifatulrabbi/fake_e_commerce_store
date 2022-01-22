@@ -1,3 +1,5 @@
+import {Document} from "mongoose";
+
 export interface IUser {
   _id?: string;
   email: string;
@@ -6,6 +8,8 @@ export interface IUser {
     full_name: string;
     address: string;
   };
-  created_at: Date;
-  updated_at: Date;
+  created_at: number;
+  updated_at: number;
 }
+
+export type IUserDoc = IUser & Document;

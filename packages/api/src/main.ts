@@ -3,6 +3,7 @@ import * as cors from "cors";
 import {config} from "./configs/config";
 import {connectDb} from "./configs/connect-db";
 import {productsRouter} from "./routers/products.router";
+import {usersRouter} from "./routers/users.router";
 import * as morgan from "morgan";
 
 const app = express();
@@ -16,6 +17,7 @@ if (!config.PROD) {
 }
 
 app.use("/api/v1/products", productsRouter);
+app.use("/api/v1/users", usersRouter);
 
 app.listen(config.PORT, () => {
   if (!config.PROD) {
