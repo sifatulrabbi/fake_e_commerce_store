@@ -11,6 +11,7 @@
     "strictNullChecks": true,
     "noErrorTruncation": true,
     "module": "CommonJS",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true
   }
 }

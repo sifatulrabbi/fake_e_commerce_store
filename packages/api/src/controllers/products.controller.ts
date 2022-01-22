@@ -80,14 +80,12 @@ class ProductsController {
   }
 
   async getProductByCategory(req: Request, res: Response) {
-    const cat = req.params.cat_name;
+    const catName = req.params.cat_name;
 
     try {
-      if (cat === "most-viewed") {
-        const products = await productsService.mostViewedProducts();
-        CustomResponse.ok(res, false, products);
-        return;
-      }
+      const products = await productsService.getProductsByCategory(catName);
+
+      CustomResponse.ok(res, false, products);
     } catch (err) {
       CustomResponse.badRequest(res, false, err.message);
     }

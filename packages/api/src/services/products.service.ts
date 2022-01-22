@@ -1,5 +1,5 @@
 import {productsModel} from "../models/products.model";
-import {IProduct, IProductDoc, IViewCount} from "../interface";
+import {IProduct, IProductDoc, IViewCount, IViewCountDoc} from "../interface";
 import {viewCountService} from "./view-count.service";
 import {config} from "../configs/config";
 
@@ -144,7 +144,7 @@ class ProductsService {
     }
   }
 
-  async mostViewedProducts() {
+  private async mostViewedProducts() {
     try {
       const products: IProduct[] = [];
       const viewsCount: IViewCount[] =
@@ -166,8 +166,35 @@ class ProductsService {
     }
   }
 
-  async getProductsByCategory() {
+  async getProductsByCategory(catName: string) {
+    let products: IProduct[] = [];
+
     try {
+      switch (catName) {
+        case "most-viewed":
+          products = await this.mostViewedProducts();
+          break;
+
+        case "offers":
+          products = await productsModel
+            .find()
+            .$where(function (this: IProductDoc) {
+              return this.offers.active === true;
+            });
+          break;
+
+        default:
+          const allProducts = await productsModel.find();
+
+          for (let i = 0; i < allProducts.length; i++) {
+            if (allProducts[i].tags.includes(catName)) {
+              products.push(allProducts[i]);
+            }
+          }
+          break;
+      }
+
+      return products;
     } catch (err) {
       throw new Error(err);
     }

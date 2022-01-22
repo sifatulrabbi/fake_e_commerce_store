@@ -55,7 +55,7 @@ class ViewCountService {
   async getMostViewedList() {
     try {
       const viewCounts = await viewCountModel.find({});
-      // return viewCounts;
+
       if (viewCounts.length < 2) {
         return viewCounts;
       }
