@@ -1,5 +1,5 @@
 import {productsModel} from "../models/products.model";
-import {IProduct, IProductDoc, IViewCount, IViewCountDoc} from "../interface";
+import {IProduct, IProductDoc, IViewCount} from "../interface";
 import {viewCountService} from "./view-count.service";
 import {config} from "../configs/config";
 
@@ -11,6 +11,18 @@ class ProductsService {
       return products;
     } catch (err) {
       if (!config.PROD) console.log(err);
+      throw new Error(String(err));
+    }
+  }
+
+  async search(query: string) {
+    try {
+      const products = await productsModel.find({
+        $text: {$search: query},
+      });
+
+      return products;
+    } catch (err) {
       throw new Error(String(err));
     }
   }

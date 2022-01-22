@@ -24,6 +24,11 @@ const productsSchema = new mongoose.Schema<IProduct>({
   rating: {type: Number, required: true, default: 0},
 });
 
+productsSchema.index(
+  {"$**": "text"},
+  {weights: {name: 20, tags: 5, description: 10}},
+);
+
 export const productsModel = mongoose.model<IProduct>(
   "products",
   productsSchema,

@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import {productsService} from "../services/products.service";
 import {CustomResponse} from "../utils/custom-responses";
+import {removeSpecialChars} from "../utils/remove-special-chars";
 
 class ProductsController {
   async getAll(req: Request, res: Response) {
@@ -8,6 +9,19 @@ class ProductsController {
       const products = await productsService.getAll();
 
       CustomResponse.ok(res, "Success", products);
+    } catch (err) {
+      CustomResponse.badRequest(res, false, err.message);
+    }
+  }
+
+  async search(req: Request, res: Response) {
+    const query = req.query.q;
+    const modQuery = removeSpecialChars(query as string);
+
+    try {
+      const products = await productsService.search(modQuery);
+
+      CustomResponse.ok(res, false, products);
     } catch (err) {
       CustomResponse.badRequest(res, false, err.message);
     }
