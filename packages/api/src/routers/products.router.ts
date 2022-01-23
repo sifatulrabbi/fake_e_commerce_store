@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import {productsController} from "../controllers/products.controller";
 import {createProductValidator} from "../validators/create-product.validator";
 

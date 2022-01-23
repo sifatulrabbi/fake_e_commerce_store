@@ -1,6 +1,6 @@
-import * as mongoose from "mongoose";
-import {IUser, IUserDoc} from "../interface";
-import * as bcrypt from "bcrypt";
+import mongoose from "mongoose";
+import {IUser, IUserDoc} from "../interfaces";
+import bcrypt from "bcrypt";
 
 const usersSchema = new mongoose.Schema<IUser>({
   email: {type: String, required: true, unique: true},

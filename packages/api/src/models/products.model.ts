@@ -1,5 +1,5 @@
-import * as mongoose from "mongoose";
-import {IProduct} from "../interface";
+import mongoose from "mongoose";
+import {IProduct} from "../interfaces";
 
 const productsSchema = new mongoose.Schema<IProduct>({
   name: {type: String, required: true},

@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {productsService} from "../services/products.service";
-import {CustomResponse} from "../utils/custom-responses";
-import {removeSpecialChars} from "../utils/remove-special-chars";
+import {CustomResponse} from "../libs/custom-responses";
+import {removeSpecialChars} from "../libs/remove-special-chars";
 
 class ProductsController {
   async getAll(req: Request, res: Response) {

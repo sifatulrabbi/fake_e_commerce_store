@@ -1,5 +1,5 @@
 import {Request, Response, NextFunction} from "express";
-import {CustomResponse} from "../utils/custom-responses";
+import {CustomResponse} from "../libs/custom-responses";
 
 export function createProductValidator(
   req: Request,

@@ -24,6 +24,17 @@ class UsersService {
     }
   }
 
+  async getOneByEmail(email: string) {
+    try {
+      const user = await usersModel.findOne({email});
+
+      return user;
+    } catch (err) {
+      if (!config.PROD) console.error(err);
+      throw new Error(err);
+    }
+  }
+
   async create(
     email: string,
     password: string,

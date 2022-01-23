@@ -5,13 +5,14 @@
     "declarationMap": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
     "strictNullChecks": true,
     "noErrorTruncation": true,
     "module": "CommonJS",
     "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "./dist"
   }
 }

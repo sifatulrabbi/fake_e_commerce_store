@@ -1,5 +1,5 @@
 import {productsModel} from "../models/products.model";
-import {IProduct, IProductDoc, IViewCount} from "../interface";
+import {IProduct, IProductDoc, IViewCount} from "../interfaces";
 import {viewCountService} from "./view-count.service";
 import {config} from "../configs/config";
 

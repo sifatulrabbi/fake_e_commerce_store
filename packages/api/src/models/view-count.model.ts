@@ -1,5 +1,5 @@
-import * as mongoose from "mongoose";
-import {IViewCount} from "../interface";
+import mongoose from "mongoose";
+import {IViewCount} from "../interfaces";
 
 const viewCountSchema = new mongoose.Schema<IViewCount>({
   product_id: {type: String, required: true},

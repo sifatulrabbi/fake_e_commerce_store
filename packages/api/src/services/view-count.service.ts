@@ -1,5 +1,5 @@
 import {viewCountModel} from "../models/view-count.model";
-import {IViewCountDoc} from "../interface";
+import {IViewCountDoc} from "../interfaces";
 
 class ViewCountService {
   async createView(product_id: string): Promise<IViewCountDoc> {

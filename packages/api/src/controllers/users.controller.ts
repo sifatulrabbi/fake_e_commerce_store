@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {usersService} from "../services/users.service";
-import {CustomResponse} from "../utils/custom-responses";
+import {CustomResponse} from "../libs/custom-responses";
 
 class UsersController {
   async getAll(req: Request, res: Response) {
