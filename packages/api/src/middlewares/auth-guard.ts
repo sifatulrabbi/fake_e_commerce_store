@@ -5,6 +5,6 @@ export function authGuard(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    CustomResponse.unauthorized(res, false);
+    CustomResponse.forbidden(res, "Forbidden content. Please Login");
   }
 }

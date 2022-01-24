@@ -4,7 +4,10 @@ import {usersModel} from "../models/users.model";
 class UsersService {
   async getAll() {
     try {
-      const users = await usersModel.find({});
+      const users = await usersModel.find(
+        {},
+        "_id email profile created_at updated_at",
+      );
 
       return users;
     } catch (err) {
@@ -21,13 +24,7 @@ class UsersService {
         return null;
       }
 
-      return {
-        _id: user._id,
-        email: user.email,
-        profile: user.profile,
-        created_at: user.created_at,
-        updated_at: user.updated_at,
-      };
+      return user;
     } catch (err) {
       if (!config.PROD) console.error(err);
       throw new Error(err);
@@ -66,7 +63,12 @@ class UsersService {
       });
       const user = await userDoc.save();
 
-      return user;
+      return {
+        _id: user._id,
+        email: user.email,
+        profile: user.profile,
+        created_at: user.created_at,
+      };
     } catch (err) {
       if (!config.PROD) console.error(err);
       throw new Error(err);
@@ -75,18 +77,31 @@ class UsersService {
 
   async update(
     id: string,
-    email?: string,
-    password?: string,
-    full_name?: string,
-    address?: string,
+    data: {
+      email?: string;
+      password?: string;
+      full_name?: string;
+      address?: string;
+    },
   ) {
     try {
+      const userDoc = await this.getOne(id);
+
+      if (!userDoc) {
+        throw new Error("User not found");
+      }
+
       const user = await usersModel.findByIdAndUpdate(
         id,
         {
-          email,
-          password,
-          profile: {full_name, address},
+          email: data.email ? data.email : userDoc.email,
+          password: data.password ? data.password : userDoc.password,
+          profile: {
+            full_name: data.full_name
+              ? data.full_name
+              : userDoc.profile.full_name,
+            address: data.address ? data.address : userDoc.profile.address,
+          },
           updated_at: Date.now(),
         },
         {new: true},

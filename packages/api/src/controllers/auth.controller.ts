@@ -29,7 +29,7 @@ class AuthController {
             CustomResponse.unauthorized(res, false, err);
             return;
           } else {
-            CustomResponse.ok(res, "Login successful", [req.user]);
+            CustomResponse.ok(res, "Login successful");
           }
         });
       },
