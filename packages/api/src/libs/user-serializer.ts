@@ -1,10 +1,6 @@
 export function userSerializer(
-  user: any,
+  user: {_id: string; email: string},
   done: (err: any, id?: string) => void,
 ): void {
-  if (user._id) {
-    done(null, user._id);
-  } else {
-    done(new Error("User not found"));
-  }
+  done(null, user._id);
 }

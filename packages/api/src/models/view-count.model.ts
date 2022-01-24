@@ -7,6 +7,6 @@ const viewCountSchema = new mongoose.Schema<IViewCount>({
 });
 
 export const viewCountModel = mongoose.model<IViewCount>(
-  "most-viewed",
+  "views-list",
   viewCountSchema,
 );

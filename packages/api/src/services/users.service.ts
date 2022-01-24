@@ -17,7 +17,17 @@ class UsersService {
     try {
       const user = await usersModel.findById(id);
 
-      return user;
+      if (!user || !user._id) {
+        return null;
+      }
+
+      return {
+        _id: user._id,
+        email: user.email,
+        profile: user.profile,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
+      };
     } catch (err) {
       if (!config.PROD) console.error(err);
       throw new Error(err);
@@ -35,17 +45,22 @@ class UsersService {
     }
   }
 
-  async create(
-    email: string,
-    password: string,
-    full_name: string,
-    address: string,
-  ) {
+  async create(data: {
+    email: string;
+    password: string;
+    confirm_password: string;
+    address: string;
+    full_name: string;
+  }) {
     try {
+      if (data.password !== data.confirm_password) {
+        throw new Error("Password and Confirm password don't match");
+      }
+
       const userDoc = new usersModel({
-        email,
-        password,
-        profile: {full_name, address},
+        email: data.email,
+        password: data.password,
+        profile: {full_name: data.full_name, address: data.address},
         created_at: Date.now(),
         updated_at: Date.now(),
       });
